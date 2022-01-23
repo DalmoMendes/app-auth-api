@@ -1,13 +1,18 @@
-import express, {Request, Response, NextFunction} from 'express';
+import express from 'express';
+import statusRoute from './routes/status.routes';
+import userRoute from './routes/user.routes';
 
 const app = express();
 
-// rotas e resolves:
-app.get('/status', (req: Request, res: Response, next: NextFunction)=> {
-    res.status(200).send({ foo: 'bar'});
-});
+// Configurações da aplicação:--------------------------------------------------->
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Subir servidor na porta 3000
+// Configurações de Rotas:------------------------------------------------------->
+app.use(statusRoute); // Status
+app.use(userRoute); // CrudUsers
+
+// Subir servidor na porta 3000 ------------------------------------------------->
 app.listen(3000, () => {
     console.log('Servidor tá On na porta 3000!');
-})
+});
